@@ -114,5 +114,52 @@ app.post("/ask", async (req, res) => {
       });
     }
 
+    // Évite l'envoi de messages énormes volontairement
+    if (message.length > 1000) {
+      return res.status(400).json({
+        error: "Le message est trop long."
+      });
+    }
+
     const completion = await client.chat.completions.create({
       model: "gpt-4o-mini",
+
+      messages: [
+        {
+          role: "system",
+          content: GAME_CONTEXT
+        },
+        {
+          role: "user",
+          content: message.trim()
+        }
+      ],
+
+      temperature: 0.2,
+      max_tokens: 250
+    });
+
+    const answer = completion.choices?.[0]?.message?.content;
+
+    if (!answer) {
+      return res.status(500).json({
+        error: "L'IA n'a retourné aucune réponse."
+      });
+    }
+
+    return res.status(200).json({
+      answer: answer.trim()
+    });
+
+  } catch (error) {
+    console.error("Erreur OpenAI :", error);
+
+    return res.status(500).json({
+      error: "Une erreur est survenue lors de la génération de la réponse."
+    });
+  }
+});
+
+app.listen(port, () => {
+  console.log(`The Final Heist AI backend lancé sur le port ${port}`);
+});
