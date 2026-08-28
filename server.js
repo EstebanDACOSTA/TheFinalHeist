@@ -116,5 +116,3 @@ app.post("/ask", async (req, res) => {
 
     const completion = await client.chat.completions.create({
       model: "gpt-4o-mini",
-
-_(Response truncated due to length)_
