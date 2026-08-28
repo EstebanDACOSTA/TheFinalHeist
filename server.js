@@ -114,16 +114,8 @@ app.post("/ask", async (req, res) => {
       });
     }
 
-    // Évite l'envoi de messages énormes volontairement
-    if (message.length > 1000) {
-      return res.status(400).json({
-        error: "Le message est trop long."
-      });
-    }
-
     const completion = await client.chat.completions.create({
       model: "gpt-4o-mini",
-
       messages: [
         {
           role: "system",
@@ -134,7 +126,6 @@ app.post("/ask", async (req, res) => {
           content: message.trim()
         }
       ],
-
       temperature: 0.2,
       max_tokens: 250
     });
@@ -143,23 +134,23 @@ app.post("/ask", async (req, res) => {
 
     if (!answer) {
       return res.status(500).json({
-        error: "L'IA n'a retourné aucune réponse."
+        error: "Aucune réponse générée."
       });
     }
 
-    return res.status(200).json({
+    res.json({
       answer: answer.trim()
     });
 
   } catch (error) {
     console.error("Erreur OpenAI :", error);
 
-    return res.status(500).json({
-      error: "Une erreur est survenue lors de la génération de la réponse."
+    res.status(500).json({
+      error: "Une erreur est survenue."
     });
   }
 });
 
-app.listen(port, () => {
-  console.log(`The Final Heist AI backend lancé sur le port ${port}`);
+app.listen(port, "0.0.0.0", () => {
+  console.log(`Serveur lancé sur le port ${port}`);
 });
