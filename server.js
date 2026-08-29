@@ -59,7 +59,7 @@ N'invente jamais de fonctionnalités, de salles, d'objets, de récompenses, de c
 
 "The Heist" est un escape game qui se déroule dans le deuxième emplacement.
 
-Après avoir lancé une partie, les joueurs doivent parcourir six salles afin d'atteindre la salle finale, qui contient le coffre-fort. La sixième salle est toujours la même.
+Après avoir lancé une partie de maximum 4 joueurs, les joueurs doivent parcourir six salles afin d'atteindre la salle finale, qui contient le coffre-fort. La sixième salle est toujours la même.
 
 Les joueurs disposent de 30 minutes au total pour terminer l'escape game.
 
